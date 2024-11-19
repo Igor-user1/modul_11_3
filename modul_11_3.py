@@ -5,22 +5,16 @@ def introspection_info(obj):
 
     list_attribute = []
     list_methods = []
-    dict_info = {}
-    for attribute in dir(obj):
+    dir_list = dir(obj)
+    for attribute in dir_list:
         if callable(getattr(obj, attribute)):
             list_methods.append(attribute)
         else:
             list_attribute.append(attribute)
-
-    dict_info['type'] = type(obj)
-    dict_info['attributes'] = list_attribute
-    dict_info['methods'] = list_methods
-    dict_info['module'] = type(inspect.getmodule(obj))
-
-    return dict_info
+    return dict([('type', str(type(obj))[8:-2]),
+                 ('attributes', list_attribute), ('methods', list_methods), ('modul', inspect.getmodule(obj))])
 
 
 a = 4
 
-print(inspect.getmodule(a))
 print(introspection_info(a))
